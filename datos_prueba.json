@@ -1,0 +1,14 @@
+{
+  "empleados": [
+    {
+      "rut": "20.470.244-6",
+      "nombre": "Jose",
+      "apellido": "Gonzalez",
+      "telefono": "985006446",
+      "correo": "jose@electromechanic.cl",
+      "contrasena": "204702446J",
+      "id": "nh_mLdj6zGM"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
