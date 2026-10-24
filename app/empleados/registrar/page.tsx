@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import {
+  obtenerEmpleados as consultarEmpleados,
+  registrarEmpleado as guardarEmpleado,
+} from "@/datos/empleados";
 
 function validarRut(rut: string) {
   const rutLimpio = rut
@@ -112,19 +116,10 @@ export default function RegistrarEmpleado() {
     setGuardando(true);
 
     try {
-      const respuestaConsulta = await fetch(
-        "http://localhost:4000/empleados"
-      );
-
-      if (!respuestaConsulta.ok) {
-        throw new Error("No se pudieron consultar los empleados.");
-      }
-
-      const empleadosExistentes: { rut: string }[] =
-        await respuestaConsulta.json();
+      const empleadosExistentes = await consultarEmpleados();
 
       const existeRut = empleadosExistentes.some(
-        (empleado) =>
+        (empleado: { rut: string }) =>
           normalizarRut(empleado.rut) === normalizarRut(rutLimpio)
       );
 
@@ -144,20 +139,7 @@ export default function RegistrarEmpleado() {
         contrasena,
       };
 
-      const respuestaRegistro = await fetch(
-        "http://localhost:4000/empleados",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(empleado),
-        }
-      );
-
-      if (!respuestaRegistro.ok) {
-        throw new Error("No se pudo registrar el empleado.");
-      }
+      await guardarEmpleado(empleado);
 
       router.push("/empleados");
     } catch {

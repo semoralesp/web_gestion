@@ -2,6 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import {
+  obtenerEmpleado as consultarEmpleado,
+  obtenerEmpleados as consultarEmpleados,
+  actualizarEmpleado as guardarCambiosEmpleado,
+} from "@/datos/empleados";
 
 type Empleado = {
   id: string;
@@ -10,6 +15,7 @@ type Empleado = {
   apellido: string;
   telefono: string;
   correo: string;
+  contrasena?: string;
 };
 
 function validarRut(rut: string) {
@@ -66,25 +72,22 @@ export default function EditarEmpleado() {
   const [guardando, setGuardando] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:4000/empleados/${id}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("No se pudo obtener el empleado");
-        }
+    async function cargarEmpleado() {
+      try {
+        const empleado: Empleado = await consultarEmpleado(id);
 
-        return response.json();
-      })
-      .then((empleado: Empleado) => {
         setRut(empleado.rut);
         setNombre(empleado.nombre);
         setApellido(empleado.apellido);
         setTelefono(empleado.telefono);
         setCorreo(empleado.correo);
         setMensaje("");
-      })
-      .catch(() => {
+      } catch {
         setMensaje("No se pudo cargar el empleado.");
-      });
+      }
+    }
+
+    cargarEmpleado();
   }, [id]);
 
   async function actualizarEmpleado(
@@ -141,15 +144,7 @@ export default function EditarEmpleado() {
     setGuardando(true);
 
     try {
-      const respuestaConsulta = await fetch(
-        "http://localhost:4000/empleados"
-      );
-
-      if (!respuestaConsulta.ok) {
-        throw new Error("No se pudieron consultar los empleados.");
-      }
-
-      const empleados: Empleado[] = await respuestaConsulta.json();
+      const empleados: Empleado[] = await consultarEmpleados();
 
       const rutDuplicado = empleados.some(
         (empleado) =>
@@ -162,26 +157,20 @@ export default function EditarEmpleado() {
         return;
       }
 
-      const respuestaActualizacion = await fetch(
-        `http://localhost:4000/empleados/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            rut: rutLimpio,
-            nombre: nombreLimpio,
-            apellido: apellidoLimpio,
-            telefono,
-            correo: correoLimpio,
-          }),
-        }
-      );
+      const empleadoActual: Empleado = await consultarEmpleado(id);
 
-      if (!respuestaActualizacion.ok) {
-        throw new Error("No se pudo actualizar el empleado.");
-      }
+      const empleadoActualizado = {
+        rut: rutLimpio,
+        nombre: nombreLimpio,
+        apellido: apellidoLimpio,
+        telefono,
+        correo: correoLimpio,
+        ...(empleadoActual.contrasena !== undefined && {
+          contrasena: empleadoActual.contrasena,
+        }),
+      };
+
+      await guardarCambiosEmpleado(id, empleadoActualizado);
 
       router.push("/empleados");
     } catch {

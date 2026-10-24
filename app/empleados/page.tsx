@@ -2,6 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import {
+  obtenerEmpleados as consultarEmpleados,
+  eliminarEmpleado as borrarEmpleado,
+} from "@/datos/empleados";
 
 type Empleado = {
   id: string;
@@ -16,29 +20,22 @@ export default function Empleados() {
   const [empleados, setEmpleados] = useState<Empleado[]>([]);
   const [mensaje, setMensaje] = useState("Cargando empleados...");
 
-  function obtenerEmpleados() {
-    fetch("http://localhost:4000/empleados")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Error al consultar empleados");
-        }
+  async function obtenerEmpleados() {
+    try {
+      const data: Empleado[] = await consultarEmpleados();
 
-        return response.json();
-      })
-      .then((data: Empleado[]) => {
-        setEmpleados(data);
-        setMensaje("");
-      })
-      .catch(() => {
-        setMensaje("No se pudieron cargar los empleados.");
-      });
+      setEmpleados(data);
+      setMensaje("");
+    } catch {
+      setMensaje("No se pudieron cargar los empleados.");
+    }
   }
 
   useEffect(() => {
     obtenerEmpleados();
   }, []);
 
-  function eliminarEmpleado(id: string) {
+  async function eliminarEmpleado(id: string) {
     const confirmar = window.confirm(
       "¿Está seguro de eliminar este empleado?"
     );
@@ -47,19 +44,12 @@ export default function Empleados() {
       return;
     }
 
-    fetch(`http://localhost:4000/empleados/${id}`, {
-      method: "DELETE",
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("No se pudo eliminar el empleado");
-        }
-
-        obtenerEmpleados();
-      })
-      .catch(() => {
-        setMensaje("Error al eliminar el empleado.");
-      });
+    try {
+      await borrarEmpleado(id);
+      await obtenerEmpleados();
+    } catch {
+      setMensaje("Error al eliminar el empleado.");
+    }
   }
 
   return (
