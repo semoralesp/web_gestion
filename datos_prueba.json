@@ -1,0 +1,32 @@
+{
+  "empleados": [
+    {
+      "rut": "20.470.244-6",
+      "nombre": "Jose",
+      "apellido": "Gonzalez",
+      "telefono": "985006446",
+      "correo": "jose@electromechanic.cl",
+      "contrasena": "204702446J",
+      "id": "Uwd0eSz7DPo"
+    }
+  ],
+  "gastos_almuerzo": [
+    {
+      "fecha": "25/10/2026",
+      "nombre": "Pollo con arroz",
+      "monto": 5000,
+      "descripcion": "Almuerzo del día",
+      "id": "OpjSmGKyUmU"
+    }
+  ],
+  "trabajos": [
+    {
+      "fecha": "25/12/2004",
+      "nombre": "reparado",
+      "descripcion": "motor se reparo",
+      "estado": "Finalizado",
+      "id": "3YGL2rTAPUg"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
