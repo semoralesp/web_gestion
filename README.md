@@ -41,3 +41,5 @@ Abre http://localhost:3000 en el navegador.
 - Inicio de sesión.
 - Listado, edición y eliminación de empleados.
 - Persistencia de datos mediante JSON Server.
+- Registro de gastos de almuerzo.
+- Registro de trabajos.
