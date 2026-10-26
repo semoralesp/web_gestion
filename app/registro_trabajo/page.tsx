@@ -90,19 +90,19 @@ export default function RegistroTrabajo() {
                 </div>
 
                 <div className="mb-3">
-                    <label className="form-label">
-                        Estado de trabajo (Pendiente/Finalizado)
-                    </label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Escriba el estado del trabajo"
+                    <label className="form-label">Estado del trabajo</label>
+                        <select
+                        className="form-select"
                         value={estado}
                         onChange={(e) => setEstado(e.target.value)}
                         required
-                    />
-                </div>
-
+                        >
+                        <option value="">Seleccione un estado</option>
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="Completado">Completado</option>
+                        </select>
+                    </div>
+                    
                 <button type="submit" className="btn btn-success">
                     Registrar trabajo
                 </button>
