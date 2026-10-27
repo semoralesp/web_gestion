@@ -31,6 +31,10 @@ export default function Home() {
         <Link href="/asistencia" className="btn btn-success">
            Registro Horario
         </Link>
+
+        <Link href="/admin" className="btn btn-success">
+            Panel de Administrador
+        </Link>
       </div>
     </main>
   );
