@@ -183,88 +183,93 @@ export default function EditarEmpleado() {
   }
 
   return (
-    <main className="container mt-5">
-      <h1 className="text-primary">Editar empleado</h1>
+    <main className="container my-4" style={{ maxWidth: "800px" }}>
+      <div className="card shadow-sm border-0 rounded-4 p-4 mb-4 bg-white">
+        <h4 className="fw-bold mb-1">Editar Empleado</h4>
+        <p className="text-muted small mb-4">Modifica los datos del empleado en el sistema</p>
 
-      {mensaje && (
-        <div className="alert alert-danger mt-3" role="alert">
-          {mensaje}
-        </div>
-      )}
+        {mensaje && (
+          <div className={`alert py-2 small ${mensaje.includes('error') || mensaje.includes('válido') || mensaje.includes('debe') || mensaje.includes('pertenece') || mensaje.includes('pudo') ? 'alert-danger' : 'alert-info'}`} role="alert">
+            {mensaje}
+          </div>
+        )}
 
-      <form onSubmit={actualizarEmpleado} className="mt-4">
-        <div className="mb-3">
-          <label className="form-label">RUT</label>
-          <input
-            className="form-control"
-            value={rut}
-            onChange={(event) => setRut(event.target.value)}
-            required
-          />
-        </div>
+        <form onSubmit={actualizarEmpleado}>
+          <div className="mb-3">
+            <label className="form-label fw-semibold small">RUT</label>
+            <input
+              className="form-control bg-light"
+              value={rut}
+              onChange={(event) => setRut(event.target.value)}
+              required
+            />
+          </div>
 
-        <div className="mb-3">
-          <label className="form-label">Nombre</label>
-          <input
-            className="form-control"
-            value={nombre}
-            onChange={(event) => setNombre(event.target.value)}
-            maxLength={25}
-            required
-          />
-        </div>
+          <div className="mb-3">
+            <label className="form-label fw-semibold small">Nombre</label>
+            <input
+              className="form-control bg-light"
+              value={nombre}
+              onChange={(event) => setNombre(event.target.value)}
+              maxLength={25}
+              required
+            />
+          </div>
 
-        <div className="mb-3">
-          <label className="form-label">Apellido</label>
-          <input
-            className="form-control"
-            value={apellido}
-            onChange={(event) => setApellido(event.target.value)}
-            maxLength={50}
-            required
-          />
-        </div>
+          <div className="mb-3">
+            <label className="form-label fw-semibold small">Apellido</label>
+            <input
+              className="form-control bg-light"
+              value={apellido}
+              onChange={(event) => setApellido(event.target.value)}
+              maxLength={50}
+              required
+            />
+          </div>
 
-        <div className="mb-3">
-          <label className="form-label">Teléfono</label>
-          <input
-            type="tel"
-            className="form-control"
-            value={telefono}
-            onChange={(event) => setTelefono(event.target.value)}
-            maxLength={9}
-            required
-          />
-        </div>
+          <div className="mb-3">
+            <label className="form-label fw-semibold small">Teléfono</label>
+            <input
+              type="tel"
+              className="form-control bg-light"
+              value={telefono}
+              onChange={(event) => setTelefono(event.target.value)}
+              maxLength={9}
+              required
+            />
+          </div>
 
-        <div className="mb-3">
-          <label className="form-label">Correo electrónico</label>
-          <input
-            type="email"
-            className="form-control"
-            value={correo}
-            onChange={(event) => setCorreo(event.target.value)}
-            maxLength={100}
-            required
-          />
-        </div>
+          <div className="mb-4">
+            <label className="form-label fw-semibold small">Correo electrónico</label>
+            <input
+              type="email"
+              className="form-control bg-light"
+              value={correo}
+              onChange={(event) => setCorreo(event.target.value)}
+              maxLength={100}
+              required
+            />
+          </div>
 
-        <button
-          type="submit"
-          className="btn btn-primary"
-          disabled={guardando}
-        >
-          {guardando ? "Guardando..." : "Guardar cambios"}
-        </button>
+          <div className="d-flex gap-2">
+            <button
+              type="submit"
+              className="btn btn-dark fw-semibold px-4"
+              disabled={guardando}
+            >
+              {guardando ? "Guardando..." : "Guardar cambios"}
+            </button>
 
-        <button
-          type="button"
-          className="btn btn-secondary ms-2"
-          onClick={() => router.push("/empleados")}
-        >
-          Cancelar
-        </button>
-      </form>
+            <button
+              type="button"
+              className="btn btn-outline-secondary fw-semibold px-4"
+              onClick={() => router.push("/empleados")}
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
     </main>
   );
 }

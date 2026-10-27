@@ -57,18 +57,6 @@ export default function Barra() {
                         <Link href="/admin" className={clasesEnlace("/admin")}>
                             Admin Panel
                         </Link>
-
-                        {esVistaAdmin && (
-                            <>
-                                <Link href="/empleados/registrar" className={clasesEnlace("/empleados/registrar")}>
-                                    Registrar Empleado
-                                </Link>
-                                
-                                <Link href="/empleados" className={clasesEnlace("/empleados")}>
-                                    Ver Empleados
-                                </Link>
-                            </>
-                        )}
                     </nav>
                 </div>
             </div>

@@ -152,91 +152,96 @@ export default function RegistrarEmpleado() {
   }
 
   return (
-    <main className="container mt-5">
-      <h1 className="text-primary">Registrar empleado</h1>
+    <main className="container my-4" style={{ maxWidth: "800px" }}>
+      <div className="card shadow-sm border-0 rounded-4 p-4 mb-4 bg-white">
+        <h4 className="fw-bold mb-1">Registrar Empleado</h4>
+        <p className="text-muted small mb-4">Ingresa los datos del nuevo empleado para el sistema</p>
 
-      <form onSubmit={registrarEmpleado} className="mt-4">
-        <div className="mb-3">
-          <label className="form-label">RUT</label>
-          <input
-            className="form-control"
-            value={rut}
-            onChange={(event) => setRut(event.target.value)}
-            placeholder="12.345.678-5"
-            required
-          />
-        </div>
+        {mensaje && (
+          <div className={`alert py-2 small ${mensaje.includes('error') || mensaje.includes('válido') || mensaje.includes('debe') || mensaje.includes('existe') || mensaje.includes('Ocurrió') ? 'alert-danger' : 'alert-info'}`} role="alert">
+            {mensaje}
+          </div>
+        )}
 
-        <div className="mb-3">
-          <label className="form-label">Nombre</label>
-          <input
-            className="form-control"
-            value={nombre}
-            onChange={(event) => setNombre(event.target.value)}
-            maxLength={25}
-            required
-          />
-        </div>
+        <form onSubmit={registrarEmpleado}>
+          <div className="mb-3">
+            <label className="form-label fw-semibold small">RUT</label>
+            <input
+              className="form-control bg-light"
+              value={rut}
+              onChange={(event) => setRut(event.target.value)}
+              placeholder="12.345.678-5"
+              required
+            />
+          </div>
 
-        <div className="mb-3">
-          <label className="form-label">Apellido</label>
-          <input
-            className="form-control"
-            value={apellido}
-            onChange={(event) => setApellido(event.target.value)}
-            maxLength={50}
-            required
-          />
-        </div>
+          <div className="mb-3">
+            <label className="form-label fw-semibold small">Nombre</label>
+            <input
+              className="form-control bg-light"
+              value={nombre}
+              onChange={(event) => setNombre(event.target.value)}
+              maxLength={25}
+              required
+            />
+          </div>
 
-        <div className="mb-3">
-          <label className="form-label">Teléfono</label>
-          <input
-            type="tel"
-            className="form-control"
-            value={telefono}
-            onChange={(event) => setTelefono(event.target.value)}
-            maxLength={9}
-            placeholder="912345678"
-            required
-          />
-        </div>
+          <div className="mb-3">
+            <label className="form-label fw-semibold small">Apellido</label>
+            <input
+              className="form-control bg-light"
+              value={apellido}
+              onChange={(event) => setApellido(event.target.value)}
+              maxLength={50}
+              required
+            />
+          </div>
 
-        <div className="mb-3">
-          <label className="form-label">Correo electrónico</label>
-          <input
-            type="email"
-            className="form-control"
-            value={correo}
-            onChange={(event) => setCorreo(event.target.value)}
-            maxLength={100}
-            placeholder="usuario@electromechanic.cl"
-            required
-          />
-        </div>
+          <div className="mb-3">
+            <label className="form-label fw-semibold small">Teléfono</label>
+            <input
+              type="tel"
+              className="form-control bg-light"
+              value={telefono}
+              onChange={(event) => setTelefono(event.target.value)}
+              maxLength={9}
+              placeholder="912345678"
+              required
+            />
+          </div>
 
-        <button
-          type="submit"
-          className="btn btn-success"
-          disabled={guardando}
-        >
-          {guardando ? "Registrando..." : "Registrar empleado"}
-        </button>
+          <div className="mb-4">
+            <label className="form-label fw-semibold small">Correo electrónico</label>
+            <input
+              type="email"
+              className="form-control bg-light"
+              value={correo}
+              onChange={(event) => setCorreo(event.target.value)}
+              maxLength={100}
+              placeholder="usuario@electromechanic.cl"
+              required
+            />
+          </div>
 
-        <button
-          type="button"
-          className="btn btn-secondary ms-2"
-          onClick={() => router.push("/empleados")}
-        >
-          Cancelar
-        </button>
-      </form>
+          <div className="d-flex gap-2">
+            <button
+              type="submit"
+              className="btn btn-dark fw-semibold px-4"
+              disabled={guardando}
+            >
+              {guardando ? "Registrando..." : "Registrar empleado"}
+            </button>
 
-      {mensaje && (
-        <div className="alert alert-danger mt-3" role="alert">
-          {mensaje}
-        </div>
-      )}
+            <button
+              type="button"
+              className="btn btn-outline-secondary fw-semibold px-4"
+              onClick={() => router.push("/empleados")}
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
     </main>
   );
 }

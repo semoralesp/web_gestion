@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { obtenerEmpleados, obtenerEstadisticas } from "@/datos/admin";
 
 export default function VistaAdministrador() {
@@ -45,25 +46,10 @@ export default function VistaAdministrador() {
     }, [empleadoSeleccionado]);
 
     return (
-        <main className="container mt-5">
-            <h1 className="text-primary mb-4">Panel de Administrador</h1>
-            
-            <div className="card shadow-sm mb-4">
-                <div className="card-body">
-                    <label className="form-label fw-bold">Filtrar información por empleado:</label>
-                    <select 
-                        className="form-select" 
-                        value={empleadoSeleccionado} 
-                        onChange={(e) => setEmpleadoSeleccionado(e.target.value)}
-                    >
-                        <option value="">Todos los empleados</option>
-                        {empleados.map((emp) => (
-                            <option key={emp.id} value={emp.id}>
-                                {emp.nombre} {emp.apellido}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+        <main className="container my-4" style={{ maxWidth: "1000px" }}>
+            <div className="p-4 rounded-4 text-white mb-4 shadow-sm" style={{ backgroundColor: "#8a2be2" }}>
+                <h4 className="fw-bold mb-1">Panel de Administración</h4>
+                <p className="mb-0 small text-white-50">Vista completa de todos los usuarios del sistema</p>
             </div>
 
             {error && <div className="alert alert-danger">{error}</div>}
@@ -75,40 +61,64 @@ export default function VistaAdministrador() {
                     </div>
                 </div>
             ) : (
-                <div className="row g-4">
-                    <div className="col-md-4">
-                        <div className="card h-100 shadow-sm border-0 border-start border-primary border-4">
-                            <div className="card-body text-center">
-                                <h5 className="card-title text-muted mb-3">Empleados Activos</h5>
-                                <p className="card-text display-5 fw-bold text-primary">
-                                    {estadisticas.totalUsuarios}
-                                </p>
+                <>
+                    <div className="row g-3 mb-4">
+                        <div className="col-md-4">
+                            <div className="card h-100 shadow-sm border-0 rounded-4 p-3">
+                                <div className="card-body p-0">
+                                    <span className="text-muted small d-block mb-1">Usuarios Totales</span>
+                                    <h3 className="fw-bold mb-0 text-primary">{estadisticas.totalUsuarios}</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="col-md-4">
+                            <div className="card h-100 shadow-sm border-0 rounded-4 p-3">
+                                <div className="card-body p-0">
+                                    <span className="text-muted small d-block mb-1">Horas Totales</span>
+                                    <h3 className="fw-bold mb-0 text-success">{estadisticas.totalHoras}.00 h</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="col-md-4">
+                            <div className="card h-100 shadow-sm border-0 rounded-4 p-3">
+                                <div className="card-body p-0">
+                                    <span className="text-muted small d-block mb-1">Gastos Totales</span>
+                                    <h3 className="fw-bold mb-0 text-danger">${estadisticas.totalGastos.toLocaleString('es-CL')}</h3>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="col-md-4">
-                        <div className="card h-100 shadow-sm border-0 border-start border-success border-4">
-                            <div className="card-body text-center">
-                                <h5 className="card-title text-muted mb-3">Horas Trabajadas</h5>
-                                <p className="card-text display-5 fw-bold text-success">
-                                    {estadisticas.totalHoras} <span className="fs-5 text-muted">hrs</span>
-                                </p>
+                    <div className="card shadow-sm border-0 rounded-4 p-4">
+                        <h5 className="fw-bold mb-3">Seleccionar Usuario</h5>
+                        <div className="row g-3 align-items-center">
+                            <div className="col-md-6">
+                                <select 
+                                    className="form-select bg-light" 
+                                    value={empleadoSeleccionado} 
+                                    onChange={(e) => setEmpleadoSeleccionado(e.target.value)}
+                                >
+                                    <option value="">Todos los empleados</option>
+                                    {empleados.map((emp) => (
+                                        <option key={emp.id} value={emp.id}>
+                                            {emp.nombre} {emp.apellido}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="col-md-6 d-flex gap-2 justify-content-md-end">
+                                <Link href="/empleados/registrar" className="btn btn-dark btn-sm px-3 fw-semibold">
+                                    Registrar Empleado
+                                </Link>
+                                <Link href="/empleados" className="btn btn-outline-dark btn-sm px-3 fw-semibold">
+                                    Ver Empleados
+                                </Link>
                             </div>
                         </div>
                     </div>
-
-                    <div className="col-md-4">
-                        <div className="card h-100 shadow-sm border-0 border-start border-danger border-4">
-                            <div className="card-body text-center">
-                                <h5 className="card-title text-muted mb-3">Gastos de Almuerzo</h5>
-                                <p className="card-text display-5 fw-bold text-danger">
-                                    ${estadisticas.totalGastos.toLocaleString('es-CL')}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </>
             )}
         </main>
     );
