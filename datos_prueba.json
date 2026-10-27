@@ -18,6 +18,13 @@
       "descripcion": "Almuerzo del día",
       "id": "OpjSmGKyUmU",
       "empleadoId": "Uwd0eSz7DPo"
+    },
+    {
+      "fecha": "20/01/2022",
+      "nombre": "Mcdonalds",
+      "monto": 4000,
+      "descripcion": "hamburguesa",
+      "id": "3OrFGgd-0WM"
     }
   ],
   "trabajos": [
